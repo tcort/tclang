@@ -2,7 +2,14 @@
 
 This file contains some notes about things to consider for future development.
 
-## Branch Instructions
+## Comparison Instructions
 
-Add some like `BNE` (branch not equal), `BEQ`, `BZR` (branch if zero), `BNZ` (branch not zero), etc.
+For greater than, greater than or equal to, less than, less than or equal to, equal to, not equal to, etc.
 
+## Bitwise operations
+
+And, or, xor, rot, etc
+
+## Error Handling
+
+Most errors are silently ignored. Fix that.

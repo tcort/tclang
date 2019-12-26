@@ -145,6 +145,7 @@ static size_t symfind(char *label);
 
 static void add(void) { pushstack(popstack() + popstack()); }
 static void bra(void) { vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
+static void bez(void) { if (popstack() == 0) vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void bnz(void) { if (popstack() != 0) vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void xdiv(void) { pushstack(popstack() / popstack()); }
 static void dec(void) { pushstack(popstack() - 1); }
@@ -162,10 +163,11 @@ static void rtn(void) { vm.pc = call_return(); }
 static void sta(void) { vm.memory[atoi(vm.program.lines[vm.pc] + 12)] = popstack(); }
 static void sub(void) { pushstack(popstack() - popstack()); }
 
-#define NOPS (18)
+#define NOPS (19)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, add },
 	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, bra },
+	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, bez },
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, bnz },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, xdiv },
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, dec },

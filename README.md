@@ -1,6 +1,42 @@
 # tclang
 
-experimental programming language.
+`tclang` is an experimental programming language. The goal is to develop a high level assembly-like language for a stack machine
+which also has random access memory and is portable and easily implementable in a number of programming languages. The ideal use
+case for such a language is as an intermediate language for a compiler or interpreter.
+
+## Status
+
+This is early days, and as such, there is a lot of churn. Changes are likely.
+
+## Example
+
+This little demo prints the squares of number from 1 to 10. It shows off the stack, main memory, looping, sub-routines, and output.
+
+```
+MAIN
+        PRN Squares of integers from 1..10
+        LDI 10
+        STA 42
+LOOP
+        LDA 42
+        BEZ DONE
+        LDI 11
+        LDA 42
+        SUB
+        JAL SQR
+        OUT
+        LDA 42
+        DEC
+        STA 42
+        LDA 42
+        BRA LOOP
+DONE
+        HLT
+SQR
+        DUP
+        MUL
+        RTN
+```
 
 ## Syntax
 
@@ -75,6 +111,7 @@ the result onto the stack. Values can be moved between the stack and main memory
 | code  | operand  | description                                                                                 |
 | ----- | -------- | ------------------------------------------------------------------------------------------- |
 | `BRA` | label    | Branch always to the label.                                                                 |
+| `BEZ` | label    | Pops the top number off of the stack and branches to the label when the number is zero.     |
 | `BNZ` | label    | Pops the top number off of the stack and branches to the label when the number is non-zero. |
 
 ### Sub-routines
