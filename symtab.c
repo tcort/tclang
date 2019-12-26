@@ -23,8 +23,15 @@ SOFTWARE.
 #include <stddef.h>
 #include <string.h>
 
+#include "const.h"
 #include "symtab.h"
 #include "types.h"
+
+void symdef(symtab_t *symtab, char *label, size_t lineno) {
+	strncpy(symtab->symbols[symtab->sp].label, label, LBLLN);
+	symtab->symbols[symtab->sp].lineno = lineno;
+	symtab->sp++;
+}
 
 size_t symfind(symtab_t *symtab, char *label) {
 	size_t i;

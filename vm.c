@@ -102,9 +102,7 @@ void load(vm_t *vm) {
 
 		/* it's a label */
 		if (line[0] != '#' && line[0] != ' ') {
-			strncpy(vm->symtab.symbols[vm->symtab.sp].label, line, LBLLN);
-			vm->symtab.symbols[vm->symtab.sp].lineno = vm->program.sp;
-			vm->symtab.sp++;
+			symdef(&vm->symtab, line, vm->program.sp);
 		}
 		/* record line for future reference */
 		strncpy(vm->program.lines[vm->program.sp], line, LNLEN);

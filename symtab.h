@@ -26,6 +26,7 @@ SOFTWARE.
 #include <stddef.h>
 #include "types.h"
 
+void symdef(symtab_t *symtab, char *label, size_t lineno);
 size_t symfind(symtab_t *symtab, char *label);
 
 #endif
