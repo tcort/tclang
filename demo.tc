@@ -1,0 +1,25 @@
+# This is a comment. Any line beginning with a hashtag is ignored.
+# Lines can be up to 72 characters long.
+#
+# If the first column contains anything except space or a '#', then
+# it is considered to be a label. Labels can be up to 7 chars long.
+# MAIN is where execution begins
+MAIN
+# If the line isn't a comment line nor label line, assume instruction.
+# instructions are 3 letters followed by a space.
+# after the space is an operand.
+# PRN prints the string
+        PRN Hello, World!
+# LDI loads an immediate value
+        LDI 2
+        LDI 2
+# ADD sums the top 2 values on the stack
+        ADD
+# OUT prints the top of the stack
+        OUT
+        LDI 4 
+        LDI 4 
+        MUL
+        OUT
+# HLT halts execution
+        HLT
