@@ -114,6 +114,17 @@ the result onto the stack. Values can be moved between the stack and main memory
 | `BEZ` | label    | Pops the top number off of the stack and branches to the label when the number is zero.     |
 | `BNZ` | label    | Pops the top number off of the stack and branches to the label when the number is non-zero. |
 
+### Comparisons
+
+| code  | operand | description                                                                                            |
+| ----- | ------- | ------------------------------------------------------------------------------------------------------ |
+| `CEQ` |         | Pops the top two values of the stack. Pushes 1 onto the stack if equal, else pushes 0.                 |
+| `CNE` |         | Pops the top two values of the stack. Pushes 1 onto the stack if not equal, else pushes 0.             |
+| `CLE` |         | Pops the top two values of the stack. Pushes 1 onto the stack if less than or equal, else pushes 0.    |
+| `CLT` |         | Pops the top two values of the stack. Pushes 1 onto the stack if less than, else pushes 0.             |
+| `CGE` |         | Pops the top two values of the stack. Pushes 1 onto the stack if greater than or equal, else pushes 0. |
+| `CGT` |         | Pops the top two values of the stack. Pushes 1 onto the stack if greater than, else pushes 0.          |
+
 ### Sub-routines
 
 | code  | operand  | description                                              |

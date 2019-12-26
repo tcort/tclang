@@ -147,6 +147,12 @@ static void add(void) { pushstack(popstack() + popstack()); }
 static void bra(void) { vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void bez(void) { if (popstack() == 0) vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void bnz(void) { if (popstack() != 0) vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
+static void ceq(void) { pushstack(popstack() == popstack()); }
+static void cge(void) { pushstack(popstack() >= popstack()); }
+static void cgt(void) { pushstack(popstack() > popstack()); }
+static void cle(void) { pushstack(popstack() <= popstack()); }
+static void clt(void) { pushstack(popstack() < popstack()); }
+static void cne(void) { pushstack(popstack() != popstack()); }
 static void xdiv(void) { pushstack(popstack() / popstack()); }
 static void dec(void) { pushstack(popstack() - 1); }
 static void dup(void) { int32_t val = popstack(); pushstack(val); pushstack(val); }
@@ -163,12 +169,18 @@ static void rtn(void) { vm.pc = call_return(); }
 static void sta(void) { vm.memory[atoi(vm.program.lines[vm.pc] + 12)] = popstack(); }
 static void sub(void) { pushstack(popstack() - popstack()); }
 
-#define NOPS (19)
+#define NOPS (25)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, add },
 	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, bra },
 	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, bez },
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, bnz },
+	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, ceq },
+	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, cge },
+	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, cgt },
+	{ { 'C', 'L', 'E', '\0' }, { 0, 0, 0, 0 }, cle },
+	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, clt },
+	{ { 'C', 'N', 'E', '\0' }, { 0, 0, 0, 0 }, cne },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, xdiv },
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, dec },
 	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, dup },
