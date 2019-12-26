@@ -62,13 +62,13 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 | code  | operand              | description                                                                                       |
 | ----- | -------------------- | ------------------------------------------------------------------------------------------------- |
-| `ADD` | *none*               | Pops the top two numbers off of the stack, adds them, and pushes the result onto the stack.       |
-| `SUB` | *none*               | Pops the top two numbers off of the stack, subtracts them, and pushes the result onto the stack.  |
-| `MUL` | *none*               | Pops the top two numbers off of the stack, multiplies them, and pushes the result onto the stack. |
-| `DIV` | *none*               | Pops the top two numbers off of the stack, divides them, and pushes the result onto the stack.    |
-| `MOD` | *none*               | Pops the top two numbers off of the stack, divides them, and pushes the remained onto the stack.  |
-| `INC` | *none*               | Pops the top number off of the stack, adds 1, and pushes the result onto the stack.               |
-| `DEC` | *none*               | Pops the top number off of the stack, subtracts 1, and pushes the result onto the stack.          |
+| `ADD` |                      | Pops the top two numbers off of the stack, adds them, and pushes the result onto the stack.       |
+| `SUB` |                      | Pops the top two numbers off of the stack, subtracts them, and pushes the result onto the stack.  |
+| `MUL` |                      | Pops the top two numbers off of the stack, multiplies them, and pushes the result onto the stack. |
+| `DIV` |                      | Pops the top two numbers off of the stack, divides them, and pushes the result onto the stack.    |
+| `MOD` |                      | Pops the top two numbers off of the stack, divides them, and pushes the remained onto the stack.  |
+| `INC` |                      | Pops the top number off of the stack, adds 1, and pushes the result onto the stack.               |
+| `DEC` |                      | Pops the top number off of the stack, subtracts 1, and pushes the result onto the stack.          |
 
 ### Flow Control
 
@@ -88,7 +88,7 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 | code  | operand | description                                   |
 | ----- | ------- | --------------------------------------------- |
-| `DUP` | *none*  | duplicates the value at the top of the stack. |
+| `DUP` |         | duplicates the value at the top of the stack. |
 
 ### Data Load / Store
 
@@ -103,11 +103,11 @@ the result onto the stack. Values can be moved between the stack and main memory
 | code  | operand | description                                                 |
 | ----- | ------- | ----------------------------------------------------------- |
 | `PRN` | string  | Prints the string to standard output.                       |
-| `OUT` | *none*  | Pops the top of the stack and prints it to standard output. |
+| `OUT` |         | Pops the top of the stack and prints it to standard output. |
 
 ### Misc
 
 | code  | operand  | description                     |
 | ----- | -------- | ------------------------------- |
-| `HLT` | *none*   | Halts execution of the program. |
+| `HLT` |          | Halts execution of the program. |
 
