@@ -35,6 +35,8 @@ tclang_SOURCES = \
 	op_cne.c  op_cne.h \
 	op_div.c  op_div.h \
 	op_dec.c  op_dec.h \
+	op_dup.c  op_dup.h \
+	op_hlt.c  op_hlt.h \
 	stack.c   stack.h \
 	symtab.c  symtab.h \
 	          types.h \

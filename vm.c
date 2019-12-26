@@ -44,9 +44,9 @@ SOFTWARE.
 #include "op_cne.h"
 #include "op_div.h"
 #include "op_dec.h"
+#include "op_dup.h"
+#include "op_hlt.h"
 
-static void dup(vm_t *vm) { int32_t val = popstack(&vm->stack); pushstack(&vm->stack, val); pushstack(&vm->stack, val); }
-static void hlt(vm_t *vm) { vm->done = 1; }
 static void inc(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) + 1); }
 static void jal(vm_t *vm) { call_link(&vm->call_stack, vm->pc); vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
 static void lda(vm_t *vm) { pushstack(&vm->stack, vm->memory[atoi(vm->program.lines[vm->pc] + 12)]); }
@@ -73,8 +73,8 @@ static op_t opcodes[NOPS] = {
 	{ { 'C', 'N', 'E', '\0' }, { 0, 0, 0, 0 }, op_cne },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, op_div },
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, op_dec },
-	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, dup },
-	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, hlt },
+	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, op_dup },
+	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_hlt },
 	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, inc },
 	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, jal },
 	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, lda },
