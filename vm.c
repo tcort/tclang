@@ -33,18 +33,6 @@ SOFTWARE.
 #include "types.h"
 #include "util.h"
 
-static void inc(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) + 1); }
-static void jal(vm_t *vm) { call_link(&vm->call_stack, vm->pc); vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
-static void lda(vm_t *vm) { pushstack(&vm->stack, vm->memory[atoi(vm->program.lines[vm->pc] + 12)]); }
-static void ldi(vm_t *vm) { pushstack(&vm->stack, atoi(vm->program.lines[vm->pc] + 12)); }
-static void mod(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) % popstack(&vm->stack)); }
-static void mul(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) * popstack(&vm->stack)); }
-static void out(vm_t *vm) { fprintf(stdout, "%d\n", popstack(&vm->stack)); }
-static void prn(vm_t *vm) { fprintf(stdout, "%s\n", vm->program.lines[vm->pc] + 12); }
-static void rtn(vm_t *vm) { vm->pc = call_return(&vm->call_stack); }
-static void sta(vm_t *vm) { vm->memory[atoi(vm->program.lines[vm->pc] + 12)] = popstack(&vm->stack); }
-static void sub(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) - popstack(&vm->stack)); }
-
 #define NOPS (25)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
@@ -61,18 +49,17 @@ static op_t opcodes[NOPS] = {
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, op_dec },
 	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, op_dup },
 	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_hlt },
-	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, inc },
-	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, jal },
-	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, lda },
-	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, ldi },
-	{ { 'M', 'O', 'D', '\0' }, { 0, 0, 0, 0 }, mod },
-	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, mul },
-	{ { 'O', 'U', 'T', '\0' }, { 0, 0, 0, 0 }, out },
-	{ { 'P', 'R', 'N', '\0' }, { 0, 0, 0, 0 }, prn },
-	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, rtn },
-	{ { 'S', 'T', 'A', '\0' }, { 0, 0, 0, 0 }, sta },
-	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, sub }
-
+	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, op_inc },
+	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, op_jal },
+	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, op_lda },
+	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, op_ldi },
+	{ { 'M', 'O', 'D', '\0' }, { 0, 0, 0, 0 }, op_mod },
+	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, op_mul },
+	{ { 'O', 'U', 'T', '\0' }, { 0, 0, 0, 0 }, op_out },
+	{ { 'P', 'R', 'N', '\0' }, { 0, 0, 0, 0 }, op_prn },
+	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, op_rtn },
+	{ { 'S', 'T', 'A', '\0' }, { 0, 0, 0, 0 }, op_sta },
+	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, op_sub }
 };
 
 

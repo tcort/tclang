@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
+#include <stdio.h>
+
+#include "call.h"
 #include "opcodes.h"
 #include "stack.h"
 #include "symtab.h"
@@ -86,3 +89,49 @@ void op_dup(vm_t *vm) {
 void op_hlt(vm_t *vm) {
 	vm->done = 1;
 }
+
+void op_inc(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) + 1);
+}
+
+void op_jal(vm_t *vm) {
+	call_link(&vm->call_stack, vm->pc);
+	vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12);
+}
+
+void op_lda(vm_t *vm) {
+	pushstack(&vm->stack, vm->memory[atoi(vm->program.lines[vm->pc] + 12)]);
+}
+
+void op_ldi(vm_t *vm) {
+	pushstack(&vm->stack, atoi(vm->program.lines[vm->pc] + 12));
+}
+
+void op_mod(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) % popstack(&vm->stack));
+}
+
+void op_mul(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) * popstack(&vm->stack));
+}
+
+void op_out(vm_t *vm) {
+	fprintf(stdout, "%d\n", popstack(&vm->stack));
+}
+
+void op_prn(vm_t *vm) {
+	fprintf(stdout, "%s\n", vm->program.lines[vm->pc] + 12);
+}
+
+void op_rtn(vm_t *vm) {
+	vm->pc = call_return(&vm->call_stack);
+}
+
+void op_sta(vm_t *vm) {
+	vm->memory[atoi(vm->program.lines[vm->pc] + 12)] = popstack(&vm->stack);
+}
+
+void op_sub(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) - popstack(&vm->stack));
+}
+
