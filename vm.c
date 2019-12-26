@@ -36,9 +36,9 @@ SOFTWARE.
 #include "op_bra.h"
 #include "op_bez.h"
 #include "op_bnz.h"
+#include "op_ceq.h"
+#include "op_cge.h"
 
-static void ceq(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) == popstack(&vm->stack)); }
-static void cge(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) >= popstack(&vm->stack)); }
 static void cgt(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) > popstack(&vm->stack)); }
 static void cle(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) <= popstack(&vm->stack)); }
 static void clt(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) < popstack(&vm->stack)); }
@@ -65,8 +65,8 @@ static op_t opcodes[NOPS] = {
 	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, op_bra },
 	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bez },
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bnz },
-	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, ceq },
-	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, cge },
+	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, op_ceq },
+	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, op_cge },
 	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, cgt },
 	{ { 'C', 'L', 'E', '\0' }, { 0, 0, 0, 0 }, cle },
 	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, clt },

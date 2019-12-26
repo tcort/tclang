@@ -20,17 +20,19 @@
 
 bin_PROGRAMS = tclang
 tclang_SOURCES = \
-	call.c  call.h \
-	const.h \
+	call.c    call.h \
+	          const.h \
 	main.c \
 	op_add.c  op_add.h \
 	op_bra.c  op_bra.h \
 	op_bez.c  op_bez.h \
 	op_bnz.c  op_bnz.h \
-	stack.c  stack.h \
-	symtab.c symtab.h \
-	types.h \
-	util.c util.h \
-	vm.c vm.h
+	op_ceq.c  op_ceq.h \
+	op_cge.c  op_cge.h \
+	stack.c   stack.h \
+	symtab.c  symtab.h \
+	          types.h \
+	util.c    util.h \
+	vm.c      vm.h
 
 EXTRA_DIST = autogen.sh LICENSE.md README.md TODO.md
