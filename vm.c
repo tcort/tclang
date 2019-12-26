@@ -63,14 +63,14 @@ static op_t opcodes[NOPS] = {
 };
 
 
-void load(vm_t *vm) {
+void load(vm_t *vm, FILE *in) {
 
 	char line[96]; /* TODO move to const.h */
 	int cap = 96;
 
 	memset(vm, '\0', sizeof(vm_t));
 
-	while (fgets(line, cap, stdin) != NULL) {
+	while (fgets(line, cap, in) != NULL) {
 
 		chomp(line);
 

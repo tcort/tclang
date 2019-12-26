@@ -28,10 +28,22 @@ SOFTWARE.
 static vm_t vm;
 
 int main(int argc, char *argv[]) {
-	(void)argc; (void)argv;
 
-	load(&vm);
+	FILE *in = stdin;
+	if (argc == 2) {
+		in = fopen(argv[1], "r");
+		if (in == NULL) {
+			perror(argv[0]);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	load(&vm, in);
 	run(&vm);
+
+	if (argc == 2) {
+		fclose(in);
+	}
 
 	exit(EXIT_SUCCESS);
 }

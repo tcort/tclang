@@ -23,10 +23,12 @@ SOFTWARE.
 #ifndef __VM_H
 #define __VM_H
 
+#include <stdio.h>
+
 #include "const.h"
 #include "types.h"
 
-void load(vm_t *vm);
+void load(vm_t *vm, FILE *in);
 void run(vm_t *vm);
 
 #endif
