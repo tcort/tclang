@@ -34,8 +34,8 @@ SOFTWARE.
 
 #include "op_add.h"
 #include "op_bra.h"
+#include "op_bez.h"
 
-static void bez(vm_t *vm) { if (popstack(&vm->stack) == 0) vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
 static void bnz(vm_t *vm) { if (popstack(&vm->stack) != 0) vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
 static void ceq(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) == popstack(&vm->stack)); }
 static void cge(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) >= popstack(&vm->stack)); }
@@ -63,7 +63,7 @@ static void sub(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) - popstac
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
 	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, op_bra },
-	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, bez },
+	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bez },
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, bnz },
 	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, ceq },
 	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, cge },
