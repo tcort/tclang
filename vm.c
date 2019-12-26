@@ -38,8 +38,8 @@ SOFTWARE.
 #include "op_bnz.h"
 #include "op_ceq.h"
 #include "op_cge.h"
+#include "op_cgt.h"
 
-static void cgt(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) > popstack(&vm->stack)); }
 static void cle(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) <= popstack(&vm->stack)); }
 static void clt(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) < popstack(&vm->stack)); }
 static void cne(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) != popstack(&vm->stack)); }
@@ -67,7 +67,7 @@ static op_t opcodes[NOPS] = {
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bnz },
 	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, op_ceq },
 	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, op_cge },
-	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, cgt },
+	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, op_cgt },
 	{ { 'C', 'L', 'E', '\0' }, { 0, 0, 0, 0 }, cle },
 	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, clt },
 	{ { 'C', 'N', 'E', '\0' }, { 0, 0, 0, 0 }, cne },
