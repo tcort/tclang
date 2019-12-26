@@ -40,8 +40,8 @@ SOFTWARE.
 #include "op_cge.h"
 #include "op_cgt.h"
 #include "op_cle.h"
+#include "op_clt.h"
 
-static void clt(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) < popstack(&vm->stack)); }
 static void cne(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) != popstack(&vm->stack)); }
 static void xdiv(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) / popstack(&vm->stack)); }
 static void dec(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) - 1); }
@@ -69,7 +69,7 @@ static op_t opcodes[NOPS] = {
 	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, op_cge },
 	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, op_cgt },
 	{ { 'C', 'L', 'E', '\0' }, { 0, 0, 0, 0 }, op_cle },
-	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, clt },
+	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_clt },
 	{ { 'C', 'N', 'E', '\0' }, { 0, 0, 0, 0 }, cne },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, xdiv },
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, dec },

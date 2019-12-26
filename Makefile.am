@@ -31,6 +31,7 @@ tclang_SOURCES = \
 	op_cge.c  op_cge.h \
 	op_cgt.c  op_cgt.h \
 	op_cle.c  op_cle.h \
+	op_clt.c  op_clt.h \
 	stack.c   stack.h \
 	symtab.c  symtab.h \
 	          types.h \
