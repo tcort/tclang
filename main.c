@@ -34,6 +34,9 @@ SOFTWARE.
 /* number of memory cells in stack */
 #define STKSZ (8192)
 
+/* number of memory cells in call stack */
+#define CSTKSZ (512)
+
 /* length of line buffer (lines must be 127 chars or less */
 #define LNLEN (128)
 
@@ -51,6 +54,12 @@ struct stack {
 	size_t sp;		/* stack pointer */
 };
 typedef struct stack stack_t;
+
+struct call_stack {
+	size_t mem[CSTKSZ];	/* array of memory cells used by this stack */
+	size_t sp;		/* stack pointer */
+};
+typedef struct call_stack call_stack_t;
 
 struct symbol {
 	char label[LBLLN];	/* label name + '\0' */
@@ -73,6 +82,7 @@ typedef struct program program_t;
 struct vm {
 	cell_t memory[MEMSZ];		/* main memory */
 	stack_t stack;			/* working stack */
+	call_stack_t call_stack;	/* call stack */
 	symtab_t symtab;		/* symbol table */
 	program_t program;		/* text of program */
 	size_t pc;			/* program counter */
@@ -107,30 +117,53 @@ static void pushstack(cell_t c) {
 	vm.stack.sp++;
 }
 
+static size_t call_return(void) {
+	if (vm.call_stack.sp == 0) {
+		return 0;
+	}
+	vm.call_stack.sp--;
+	return vm.call_stack.mem[vm.call_stack.sp];
+}
+
+static void call_link(size_t c) {
+	if (vm.call_stack.sp + 1 >= CSTKSZ) {
+		return;
+	}
+
+	vm.call_stack.mem[vm.call_stack.sp] = c;
+	vm.call_stack.sp++;
+}
+
 static size_t symfind(char *label);
 
 static void add(void) { pushstack(popstack() + popstack()); }
 static void xdiv(void) { pushstack(popstack() / popstack()); }
+static void dup(void) { int32_t val = popstack(); pushstack(val); pushstack(val); }
 static void hlt(void) { vm.done = 1; }
+static void jal(void) { call_link(vm.pc); vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void jmp(void) { vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void ldi(void) { pushstack(atoi(vm.program.lines[vm.pc] + 12)); }
 static void mod(void) { pushstack(popstack() % popstack()); }
 static void mul(void) { pushstack(popstack() * popstack()); }
 static void out(void) { fprintf(stdout, "%d\n", popstack()); }
 static void prn(void) { fprintf(stdout, "%s\n", vm.program.lines[vm.pc] + 12); }
+static void rtn(void) { vm.pc = call_return(); }
 static void sub(void) { pushstack(popstack() - popstack()); }
 
-#define NOPS (10)
+#define NOPS (13)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, add },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, xdiv },
+	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, dup },
 	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, hlt },
+	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, jal },
 	{ { 'J', 'M', 'P', '\0' }, { 0, 0, 0, 0 }, jmp },
 	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, ldi },
 	{ { 'M', 'O', 'D', '\0' }, { 0, 0, 0, 0 }, mod },
 	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, mul },
 	{ { 'O', 'U', 'T', '\0' }, { 0, 0, 0, 0 }, out },
 	{ { 'P', 'R', 'N', '\0' }, { 0, 0, 0, 0 }, prn },
+	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, rtn },
 	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, sub }
 
 };

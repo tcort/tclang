@@ -47,6 +47,7 @@ Lines of source code are fixed length records.
 * A memory cell may hold a 32 bit signed integer.
 * There are 32,768 random access memory cells.
 * There is a stack with 8,192 memory cells.
+* There is a call stack with 512 memory cells.
 
 ## Virtual Machine Description
 
@@ -72,6 +73,19 @@ the result onto the stack. Values can be moved between the stack and main memory
 | code  | operand  | description                                                           |
 | ----- | -------- | --------------------------------------------------------------------- |
 | `JMP` | label    | Unconditionally jumps to the line which contains the specified label. |
+
+### Sub-routines
+
+| code  | operand  | description                                              |
+| ----- | -------- | -------------------------------------------------------- |
+| `JAL` | label    | Call the sub-routine identified by label.                |
+| `RTN` |          | Return to the location where the sub-routine was called. |
+
+### Stack Manipulation
+
+| code  | operand | description                                   |
+| ----- | ------- | --------------------------------------------- |
+| `DUP` | *none*  | duplicates the value at the top of the stack. |
 
 ### Data Load / Store
 

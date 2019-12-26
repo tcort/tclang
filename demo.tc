@@ -21,5 +21,14 @@ MAIN
         LDI 4 
         MUL
         OUT
+# JAL jumps and links a sub-routine
+        LDI 25
+        JAL SQR
+        OUT
 # HLT halts execution
         HLT
+SQR
+        DUP
+        DUP
+        MUL
+        RTN
