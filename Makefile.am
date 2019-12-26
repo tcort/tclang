@@ -23,6 +23,8 @@ tclang_SOURCES = \
 	call.c  call.h \
 	const.h \
 	main.c \
+	op_add.c  op_add.h \
+	op_bra.c  op_bra.h \
 	stack.c  stack.h \
 	symtab.c symtab.h \
 	types.h \

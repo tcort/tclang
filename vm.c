@@ -32,8 +32,9 @@ SOFTWARE.
 #include "types.h"
 #include "util.h"
 
-static void add(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) + popstack(&vm->stack)); }
-static void bra(vm_t *vm) { vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
+#include "op_add.h"
+#include "op_bra.h"
+
 static void bez(vm_t *vm) { if (popstack(&vm->stack) == 0) vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
 static void bnz(vm_t *vm) { if (popstack(&vm->stack) != 0) vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
 static void ceq(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) == popstack(&vm->stack)); }
@@ -60,8 +61,8 @@ static void sub(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) - popstac
 
 #define NOPS (25)
 static op_t opcodes[NOPS] = {
-	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, add },
-	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, bra },
+	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
+	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, op_bra },
 	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, bez },
 	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, bnz },
 	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, ceq },
@@ -91,7 +92,7 @@ static op_t opcodes[NOPS] = {
 
 void load(vm_t *vm) {
 
-	char line[96];
+	char line[96]; /* TODO move to const.h */
 	int cap = 96;
 
 	memset(vm, '\0', sizeof(vm_t));
@@ -115,7 +116,7 @@ void run(vm_t *vm) {
 	size_t begin;
 
 	/* start a MAIN */
-	begin = symfind(&vm->symtab, "MAIN");
+	begin = symfind(&vm->symtab, "MAIN"); /* move to const.h */
 	/* if not found, start at line 0 */
 	if (begin == LNMAX + 1) {
 		begin = 0;
