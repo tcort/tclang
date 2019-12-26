@@ -67,12 +67,15 @@ the result onto the stack. Values can be moved between the stack and main memory
 | `MUL` | *none*               | Pops the top two numbers off of the stack, multiplies them, and pushes the result onto the stack. |
 | `DIV` | *none*               | Pops the top two numbers off of the stack, divides them, and pushes the result onto the stack.    |
 | `MOD` | *none*               | Pops the top two numbers off of the stack, divides them, and pushes the remained onto the stack.  |
+| `INC` | *none*               | Pops the top number off of the stack, adds 1, and pushes the result onto the stack.               |
+| `DEC` | *none*               | Pops the top number off of the stack, subtracts 1, and pushes the result onto the stack.          |
 
 ### Flow Control
 
-| code  | operand  | description                                                           |
-| ----- | -------- | --------------------------------------------------------------------- |
-| `JMP` | label    | Unconditionally jumps to the line which contains the specified label. |
+| code  | operand  | description                                                                                 |
+| ----- | -------- | ------------------------------------------------------------------------------------------- |
+| `BRA` | label    | Branch always to the label.                                                                 |
+| `BNZ` | label    | Pops the top number off of the stack and branches to the label when the number is non-zero. |
 
 ### Sub-routines
 
@@ -89,9 +92,11 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 ### Data Load / Store
 
-| code  | operand  | description                                             |
-| ----- | -------- | ------------------------------------------------------- |
-| `LDI` | number   | Loads the immediate value and pushes it onto the stack. |
+| code  | operand  | description                                                       |
+| ----- | -------- | ----------------------------------------------------------------- |
+| `LDI` | number   | Loads the immediate value and pushes it onto the stack.           |
+| `LDA` | address  | Loads a value from the given memory address (hex) onto the stack. |
+| `STA` | address  | Stores a value to the given memory address (hex) from the stack.  |
 
 ### Input / Output
 

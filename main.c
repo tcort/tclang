@@ -100,6 +100,13 @@ struct operation {
 };
 typedef struct operation op_t;
 
+static cell_t peekstack(void) {
+	if (vm.stack.sp == 0) {
+		return 0;
+	}
+	return vm.stack.mem[vm.stack.sp-1];
+}
+
 static cell_t popstack(void) {
 	if (vm.stack.sp == 0) {
 		return 0;
@@ -137,33 +144,43 @@ static void call_link(size_t c) {
 static size_t symfind(char *label);
 
 static void add(void) { pushstack(popstack() + popstack()); }
+static void bra(void) { vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
+static void bnz(void) { if (popstack() != 0) vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
 static void xdiv(void) { pushstack(popstack() / popstack()); }
+static void dec(void) { pushstack(popstack() - 1); }
 static void dup(void) { int32_t val = popstack(); pushstack(val); pushstack(val); }
 static void hlt(void) { vm.done = 1; }
+static void inc(void) { pushstack(popstack() + 1); }
 static void jal(void) { call_link(vm.pc); vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
-static void jmp(void) { vm.pc = symfind(vm.program.lines[vm.pc] + 12); }
+static void lda(void) { pushstack(vm.memory[atoi(vm.program.lines[vm.pc] + 12)]); }
 static void ldi(void) { pushstack(atoi(vm.program.lines[vm.pc] + 12)); }
 static void mod(void) { pushstack(popstack() % popstack()); }
 static void mul(void) { pushstack(popstack() * popstack()); }
 static void out(void) { fprintf(stdout, "%d\n", popstack()); }
 static void prn(void) { fprintf(stdout, "%s\n", vm.program.lines[vm.pc] + 12); }
 static void rtn(void) { vm.pc = call_return(); }
+static void sta(void) { vm.memory[atoi(vm.program.lines[vm.pc] + 12)] = popstack(); }
 static void sub(void) { pushstack(popstack() - popstack()); }
 
-#define NOPS (13)
+#define NOPS (18)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, add },
+	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, bra },
+	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, bnz },
 	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, xdiv },
+	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, dec },
 	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, dup },
 	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, hlt },
+	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, inc },
 	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, jal },
-	{ { 'J', 'M', 'P', '\0' }, { 0, 0, 0, 0 }, jmp },
+	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, lda },
 	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, ldi },
 	{ { 'M', 'O', 'D', '\0' }, { 0, 0, 0, 0 }, mod },
 	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, mul },
 	{ { 'O', 'U', 'T', '\0' }, { 0, 0, 0, 0 }, out },
 	{ { 'P', 'R', 'N', '\0' }, { 0, 0, 0, 0 }, prn },
 	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, rtn },
+	{ { 'S', 'T', 'A', '\0' }, { 0, 0, 0, 0 }, sta },
 	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, sub }
 
 };
