@@ -40,6 +40,5 @@ LOOP
 # sub-routine to square a number (x -> x*x)
 SQR
         DUP
-        DUP
         MUL
         RTN
