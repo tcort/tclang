@@ -2,8 +2,7 @@
 
 `tclang` is an experimental programming language. The goal is to develop a high level assembly-like language for a stack machine
 which also has random access memory and is portable and easily implementable in a number of programming languages. The ideal use
-case for such a language is as an intermediate language for a compiler or interpreter. It may also be suitable for small and
-vintage systems without much memory as the interpreter doesn't do any memory allocation.
+case for such a language is as an intermediate language for a compiler or interpreter. 
 
 ## Status
 
