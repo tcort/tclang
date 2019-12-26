@@ -26,6 +26,7 @@ tclang_SOURCES = \
 	op_add.c  op_add.h \
 	op_bra.c  op_bra.h \
 	op_bez.c  op_bez.h \
+	op_bnz.c  op_bnz.h \
 	stack.c  stack.h \
 	symtab.c symtab.h \
 	types.h \
