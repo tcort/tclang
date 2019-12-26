@@ -19,6 +19,7 @@
 # SOFTWARE.
 
 bin_PROGRAMS = tclang
-tclang_SOURCES = call.c  call.h  const.h  main.c  stack.c  stack.h  types.h
+tclang_SOURCES = call.c  call.h  const.h  main.c  stack.c  stack.h  types.h \
+	util.h util.c
 
 EXTRA_DIST = autogen.sh LICENSE.md README.md TODO.md

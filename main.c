@@ -29,6 +29,7 @@ SOFTWARE.
 #include "const.h"
 #include "stack.h"
 #include "types.h"
+#include "util.h"
 
 static vm_t vm;
 
@@ -90,17 +91,6 @@ static op_t opcodes[NOPS] = {
 	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, sub }
 
 };
-
-static void chomp(char *line) {
-	size_t end = strlen(line) - 1;
-	if (line[end] == '\n') {
-		line[end] = '\0';
-		end--;
-	}
-	if (line[end] == '\r') {
-		line[end] = '\0';
-	}
-}
 
 static void load(void) {
 
