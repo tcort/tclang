@@ -76,7 +76,7 @@ typedef struct vm vm_t;
 struct operation {
 	char code[4];
 	char pad[4];
-	void (*fn)(void);
+	void (*fn)(vm_t *vm);
 };
 typedef struct operation op_t;
 

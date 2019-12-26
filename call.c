@@ -24,20 +24,20 @@ SOFTWARE.
 
 #include "call.h"
 
-size_t call_return(vm_t *vm) {
-	if (vm->call_stack.sp == 0) {
+size_t call_return(call_stack_t *call_stack) {
+	if (call_stack->sp == 0) {
 		return 0;
 	}
-	vm->call_stack.sp--;
-	return vm->call_stack.mem[vm->call_stack.sp];
+	call_stack->sp--;
+	return call_stack->mem[call_stack->sp];
 }
 
-void call_link(vm_t *vm, size_t c) {
-	if (vm->call_stack.sp + 1 >= CSTKSZ) {
+void call_link(call_stack_t *call_stack, size_t c) {
+	if (call_stack->sp + 1 >= CSTKSZ) {
 		return;
 	}
 
-	vm->call_stack.mem[vm->call_stack.sp] = c;
-	vm->call_stack.sp++;
+	call_stack->mem[call_stack->sp] = c;
+	call_stack->sp++;
 }
 

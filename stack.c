@@ -23,27 +23,27 @@ SOFTWARE.
 #include "stack.h"
 #include "types.h"
 
-cell_t peekstack(vm_t *vm) {
-	if (vm->stack.sp == 0) {
+cell_t peekstack(stack_t *stack) {
+	if (stack->sp == 0) {
 		return 0;
 	}
-	return vm->stack.mem[vm->stack.sp-1];
+	return stack->mem[stack->sp-1];
 }
 
-cell_t popstack(vm_t *vm) {
-	if (vm->stack.sp == 0) {
+cell_t popstack(stack_t *stack) {
+	if (stack->sp == 0) {
 		return 0;
 	}
-	vm->stack.sp--;
-	return vm->stack.mem[vm->stack.sp];
+	stack->sp--;
+	return stack->mem[stack->sp];
 }
 
-void pushstack(vm_t *vm, cell_t c) {
-	if (vm->stack.sp + 1 >= STKSZ) {
+void pushstack(stack_t *stack, cell_t c) {
+	if (stack->sp + 1 >= STKSZ) {
 		return;
 	}
 
-	vm->stack.mem[vm->stack.sp] = c;
-	vm->stack.sp++;
+	stack->mem[stack->sp] = c;
+	stack->sp++;
 }
 

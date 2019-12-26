@@ -20,14 +20,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
-#ifndef __CALL_H
-#define __CALL_H
-
 #include <stddef.h>
+#include <string.h>
 
+#include "symtab.h"
 #include "types.h"
 
-void call_link(call_stack_t *call_stack, size_t c);
-size_t call_return(call_stack_t *call_stack);
+size_t symfind(symtab_t *symtab, char *label) {
+	size_t i;
 
-#endif
+	for (i = 0; i < symtab->sp; i++) {	
+		if (strcmp(symtab->symbols[i].label, label) == 0) {
+			return symtab->symbols[i].lineno;
+		}
+
+	}
+
+	return LNMAX + 1;
+}
+

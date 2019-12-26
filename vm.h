@@ -20,14 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
-#ifndef __CALL_H
-#define __CALL_H
+#ifndef __VM_H
+#define __VM_H
 
-#include <stddef.h>
-
+#include "const.h"
 #include "types.h"
 
-void call_link(call_stack_t *call_stack, size_t c);
-size_t call_return(call_stack_t *call_stack);
+void load(vm_t *vm);
+void run(vm_t *vm);
 
 #endif
