@@ -15,23 +15,33 @@ This little demo prints the squares of number from 1 to 10. It shows off the sta
 ```
 MAIN
         PRN Squares of integers from 1..10
+# for (i = 0; i <= n; i++) printf("%d\n", sqr(i));
+# initialize i (i=1)
+        LDI 1
+        STA 42
+# initialize n (n=10)
         LDI 10
-        STA 42
+        STA 88
 LOOP
+# (i <= n)?
+        LDA 88
         LDA 42
+        CLE
         BEZ DONE
-        LDI 11
+# r = sqr(i)
         LDA 42
-        SUB
         JAL SQR
+# print(r)
         OUT
+# i++
         LDA 42
-        DEC
+        INC
         STA 42
-        LDA 42
+# continue
         BRA LOOP
 DONE
         HLT
+# int sqr(int x) { return x*x; }
 SQR
         DUP
         MUL
