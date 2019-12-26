@@ -19,13 +19,16 @@ lines	: lines line
 	| line
 	;
 
-line	: comment
-	| code
+line	: comment '\n'
+	| code '\n'
 	;
 
 comment	: '#' [anything]
 
-code	: opcode operand
+code	: label opcode operand
+	| opcode operand
+	| opcode
+	| label
 	;
 ```
 
