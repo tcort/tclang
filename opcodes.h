@@ -20,11 +20,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
-#ifndef __OP_DUP_H
-#define __OP_DUP_H
+#ifndef __OPCODES_H
+#define __OPCODES_H
 
 #include "types.h"
 
+void op_add(vm_t *vm);
+void op_bez(vm_t *vm);
+void op_bnz(vm_t *vm);
+void op_bra(vm_t *vm);
+void op_ceq(vm_t *vm);
+void op_cge(vm_t *vm);
+void op_cgt(vm_t *vm);
+void op_cle(vm_t *vm);
+void op_clt(vm_t *vm);
+void op_cne(vm_t *vm);
+void op_dec(vm_t *vm);
+void op_div(vm_t *vm);
 void op_dup(vm_t *vm);
+void op_hlt(vm_t *vm);
 
 #endif
+

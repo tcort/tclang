@@ -23,20 +23,7 @@ tclang_SOURCES = \
 	call.c    call.h \
 	          const.h \
 	main.c \
-	op_add.c  op_add.h \
-	op_bra.c  op_bra.h \
-	op_bez.c  op_bez.h \
-	op_bnz.c  op_bnz.h \
-	op_ceq.c  op_ceq.h \
-	op_cge.c  op_cge.h \
-	op_cgt.c  op_cgt.h \
-	op_cle.c  op_cle.h \
-	op_clt.c  op_clt.h \
-	op_cne.c  op_cne.h \
-	op_div.c  op_div.h \
-	op_dec.c  op_dec.h \
-	op_dup.c  op_dup.h \
-	op_hlt.c  op_hlt.h \
+	opcodes.c opcodes.h \
 	stack.c   stack.h \
 	symtab.c  symtab.h \
 	          types.h \

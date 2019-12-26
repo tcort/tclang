@@ -20,10 +20,69 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
-#include "op_cle.h"
+#include "opcodes.h"
 #include "stack.h"
+#include "symtab.h"
 #include "types.h"
+
+void op_add(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) + popstack(&vm->stack));
+}
+
+void op_bez(vm_t *vm) {
+	if (popstack(&vm->stack) == 0) {
+		vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12);
+	}
+}
+
+void op_bnz(vm_t *vm) {
+	if (popstack(&vm->stack) != 0) {
+		vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12);
+	}
+}
+
+void op_bra(vm_t *vm) {
+	vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12);
+}
+
+void op_ceq(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) == popstack(&vm->stack));
+}
+
+void op_cge(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) >= popstack(&vm->stack));
+}
+
+void op_cgt(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) > popstack(&vm->stack));
+}
 
 void op_cle(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) <= popstack(&vm->stack));
+}
+
+void op_clt(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) < popstack(&vm->stack));
+}
+
+void op_cne(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) != popstack(&vm->stack));
+}
+
+void op_dec(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) - 1);
+}
+
+void op_div(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) / popstack(&vm->stack));
+}
+
+void op_dup(vm_t *vm) {
+	int32_t val = popstack(&vm->stack);
+	pushstack(&vm->stack, val);
+	pushstack(&vm->stack, val);
+}
+
+void op_hlt(vm_t *vm) {
+	vm->done = 1;
 }

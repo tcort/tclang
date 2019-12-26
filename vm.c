@@ -27,25 +27,11 @@ SOFTWARE.
 
 #include "call.h"
 #include "const.h"
+#include "opcodes.h"
 #include "stack.h"
 #include "symtab.h"
 #include "types.h"
 #include "util.h"
-
-#include "op_add.h"
-#include "op_bra.h"
-#include "op_bez.h"
-#include "op_bnz.h"
-#include "op_ceq.h"
-#include "op_cge.h"
-#include "op_cgt.h"
-#include "op_cle.h"
-#include "op_clt.h"
-#include "op_cne.h"
-#include "op_div.h"
-#include "op_dec.h"
-#include "op_dup.h"
-#include "op_hlt.h"
 
 static void inc(vm_t *vm) { pushstack(&vm->stack, popstack(&vm->stack) + 1); }
 static void jal(vm_t *vm) { call_link(&vm->call_stack, vm->pc); vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12); }
