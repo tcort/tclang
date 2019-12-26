@@ -20,4 +20,4 @@
 
 bin_PROGRAMS = tclang
 tclang_SOURCES = main.c 
-EXTRA_DIST = README.md LICENSE.md
+EXTRA_DIST = autogen.sh LICENSE.md README.md TODO.md
