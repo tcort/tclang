@@ -22,5 +22,6 @@ AC_INIT([tclang], [0.0.0], [linuxgeek@gmail.com])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_LANG([C])
 AC_PROG_CC
+AC_CONFIG_HEADERS([config.h:config.in])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -10,10 +10,6 @@ would be nice if we could trace execution
 
 a test suite would be nice
 
-## I/O
-
-Input functions and better output functions
-
 ## Floating point
 
 Would be nice if we could do floats as well.

@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
+#include "config.h"
+
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -113,9 +116,9 @@ void op_inc(vm_t *vm) {
 }
 
 void op_ini(vm_t *vm) {
-	char line[96], *s;
-	memset(line, '\0', 96);
-	if ((s = fgets(line, 96, stdin)) != NULL) {
+	char line[LINE_MAX], *s;
+	memset(line, '\0', LINE_MAX);
+	if ((s = fgets(line, LINE_MAX, stdin)) != NULL) {
 		pushstack(&vm->stack, atoi(line));
 	}
 }

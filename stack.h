@@ -25,8 +25,8 @@ SOFTWARE.
 
 #include "types.h"
 
-cell_t peekstack(stack_t *stack);
-cell_t popstack(stack_t *stack);
-void pushstack(stack_t *stack, cell_t c);
+cell_t peekstack(stk_t *stack);
+cell_t popstack(stk_t *stack);
+void pushstack(stk_t *stack, cell_t c);
 
 #endif

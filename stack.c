@@ -20,17 +20,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
+#include "config.h"
 #include "stack.h"
 #include "types.h"
 
-cell_t peekstack(stack_t *stack) {
+cell_t peekstack(stk_t *stack) {
 	if (stack->sp == 0) {
 		return 0;
 	}
 	return stack->mem[stack->sp-1];
 }
 
-cell_t popstack(stack_t *stack) {
+cell_t popstack(stk_t *stack) {
 	if (stack->sp == 0) {
 		return 0;
 	}
@@ -38,7 +39,7 @@ cell_t popstack(stack_t *stack) {
 	return stack->mem[stack->sp];
 }
 
-void pushstack(stack_t *stack, cell_t c) {
+void pushstack(stk_t *stack, cell_t c) {
 	if (stack->sp + 1 >= STKSZ) {
 		return;
 	}

@@ -27,7 +27,7 @@ SOFTWARE.
 
 #include "types.h"
 
-void call_link(call_stack_t *call_stack, size_t c);
-size_t call_return(call_stack_t *call_stack);
+void call_link(call_stk_t *call_stack, size_t c);
+size_t call_return(call_stk_t *call_stack);
 
 #endif

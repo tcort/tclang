@@ -20,11 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
+#include "config.h"
+
 #include <stddef.h>
 
 #include "call.h"
 
-size_t call_return(call_stack_t *call_stack) {
+size_t call_return(call_stk_t *call_stack) {
 	if (call_stack->sp == 0) {
 		return 0;
 	}
@@ -32,7 +34,7 @@ size_t call_return(call_stack_t *call_stack) {
 	return call_stack->mem[call_stack->sp];
 }
 
-void call_link(call_stack_t *call_stack, size_t c) {
+void call_link(call_stk_t *call_stack, size_t c) {
 	if (call_stack->sp + 1 >= CSTKSZ) {
 		return;
 	}

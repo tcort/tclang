@@ -35,13 +35,13 @@ struct stack {
 	cell_t mem[STKSZ];	/* array of memory cells used by this stack */
 	size_t sp;		/* stack pointer */
 };
-typedef struct stack stack_t;
+typedef struct stack stk_t;
 
 struct call_stack {
 	size_t mem[CSTKSZ];	/* array of memory cells used by this stack */
 	size_t sp;		/* stack pointer */
 };
-typedef struct call_stack call_stack_t;
+typedef struct call_stack call_stk_t;
 
 struct symbol {
 	char label[LBLLN];	/* label name + '\0' */
@@ -63,8 +63,8 @@ typedef struct program program_t;
 
 struct vm {
 	cell_t memory[MEMSZ];		/* main memory */
-	stack_t stack;			/* working stack */
-	call_stack_t call_stack;	/* call stack */
+	stk_t stack;			/* working stack */
+	call_stk_t call_stack;	/* call stack */
 	symtab_t symtab;		/* symbol table */
 	program_t program;		/* text of program */
 	size_t pc;			/* program counter */

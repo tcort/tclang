@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
+#include "config.h"
+
+#include <limits.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
@@ -33,49 +36,50 @@ SOFTWARE.
 #include "types.h"
 #include "util.h"
 
+#define op(NAME, FUNC) { { NAME }, { 0, 0, 0, 0 }, FUNC }
+
 #define NOPS (34)
 static op_t opcodes[NOPS] = {
-	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
-	{ { 'A', 'N', 'D', '\0' }, { 0, 0, 0, 0 }, op_and },
-	{ { 'B', 'L', 'S', '\0' }, { 0, 0, 0, 0 }, op_bls },
-	{ { 'B', 'R', 'A', '\0' }, { 0, 0, 0, 0 }, op_bra },
-	{ { 'B', 'R', 'S', '\0' }, { 0, 0, 0, 0 }, op_brs },
-	{ { 'B', 'E', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bez },
-	{ { 'B', 'N', 'Z', '\0' }, { 0, 0, 0, 0 }, op_bnz },
-	{ { 'C', 'E', 'Q', '\0' }, { 0, 0, 0, 0 }, op_ceq },
-	{ { 'C', 'G', 'E', '\0' }, { 0, 0, 0, 0 }, op_cge },
-	{ { 'C', 'G', 'T', '\0' }, { 0, 0, 0, 0 }, op_cgt },
-	{ { 'C', 'L', 'E', '\0' }, { 0, 0, 0, 0 }, op_cle },
-	{ { 'C', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_clt },
-	{ { 'C', 'N', 'E', '\0' }, { 0, 0, 0, 0 }, op_cne },
-	{ { 'D', 'I', 'V', '\0' }, { 0, 0, 0, 0 }, op_div },
-	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, op_dec },
-	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, op_dup },
-	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_hlt },
-	{ { 'I', 'C', 'H', '\0' }, { 0, 0, 0, 0 }, op_ich },
-	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, op_inc },
-	{ { 'I', 'N', 'I', '\0' }, { 0, 0, 0, 0 }, op_ini },
-	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, op_jal },
-	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, op_lda },
-	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, op_ldi },
-	{ { 'M', 'O', 'D', '\0' }, { 0, 0, 0, 0 }, op_mod },
-	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, op_mul },
-	{ { 'N', 'O', 'T', '\0' }, { 0, 0, 0, 0 }, op_not },
-	{ { 'O', 'A', 'R', '\0' }, { 0, 0, 0, 0 }, op_oar },
-	{ { 'O', 'C', 'H', '\0' }, { 0, 0, 0, 0 }, op_och },
-	{ { 'O', 'T', 'I', '\0' }, { 0, 0, 0, 0 }, op_oti },
-	{ { 'O', 'T', 'S', '\0' }, { 0, 0, 0, 0 }, op_ots },
-	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, op_rtn },
-	{ { 'S', 'T', 'A', '\0' }, { 0, 0, 0, 0 }, op_sta },
-	{ { 'S', 'U', 'B', '\0' }, { 0, 0, 0, 0 }, op_sub },
-	{ { 'X', 'O', 'R', '\0' }, { 0, 0, 0, 0 }, op_xor }
+	op("ADD", op_add),
+	op("AND", op_and),
+	op("BEZ", op_bez),
+	op("BLS", op_bls),
+	op("BNZ", op_bnz),
+	op("BRA", op_bra),
+	op("BRS", op_brs),
+	op("CEQ", op_ceq),
+	op("CGE", op_cge),
+	op("CGT", op_cgt),
+	op("CLE", op_cle),
+	op("CLT", op_clt),
+	op("CNE", op_cne),
+	op("DEC", op_dec),
+	op("DIV", op_div),
+	op("DUP", op_dup),
+	op("HLT", op_hlt),
+	op("ICH", op_ich),
+	op("INC", op_inc),
+	op("INI", op_ini),
+	op("JAL", op_jal),
+	op("LDA", op_lda),
+	op("LDI", op_ldi),
+	op("MOD", op_mod),
+	op("MUL", op_mul),
+	op("NOT", op_not),
+	op("OAR", op_oar),
+	op("OCH", op_och),
+	op("OTI", op_oti),
+	op("OTS", op_ots),
+	op("RTN", op_rtn),
+	op("STA", op_sta),
+	op("SUB", op_sub),
+	op("XOR", op_xor)
 };
-
 
 void load(vm_t *vm, FILE *in) {
 
-	char line[96]; /* TODO move to const.h */
-	int cap = 96;
+	char line[LINE_MAX];
+	int cap = LINE_MAX;
 
 	memset(vm, '\0', sizeof(vm_t));
 
@@ -105,19 +109,23 @@ void run(vm_t *vm) {
 	}
 
 	for (vm->pc = begin; vm->pc < vm->program.sp && !vm->done && !feof(stdin) && !ferror(stdin); vm->pc++) {
-		size_t i;
+		size_t i, run;
 		if (vm->program.lines[vm->pc][0] != ' ') {
 			continue; /* label or comment */
 		}
 		/* opcode */
-		for (i = 0; i < NOPS; i++) {
+		for (run = i = 0; i < NOPS; i++) {
 			/* find op code and execute it */
 			if (memcmp(vm->program.lines[vm->pc] + 8, opcodes[i].code, 3) == 0) {
 				opcodes[i].fn(vm);
+				run = 1;
 				break;
 			}
 		}
-		/* TODO probably want to abort here if no op code found */
+		if (run == 0) {
+			fprintf(stderr, "ERROR: BAD OP CODE (LINE %lu)\n", vm->pc);
+			return;
+		}
 	}
 
 }
