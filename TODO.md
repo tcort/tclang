@@ -2,10 +2,6 @@
 
 This file contains some notes about things to consider for future development.
 
-## Bitwise operations
-
-And, or, xor, rot, etc
-
 ## Tracing
 
 would be nice if we could trace execution

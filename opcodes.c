@@ -21,6 +21,7 @@ SOFTWARE.
 ******************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "call.h"
 #include "opcodes.h"
@@ -30,6 +31,10 @@ SOFTWARE.
 
 void op_add(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) + popstack(&vm->stack));
+}
+
+void op_and(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) & popstack(&vm->stack));
 }
 
 void op_bez(vm_t *vm) {
@@ -46,6 +51,14 @@ void op_bnz(vm_t *vm) {
 
 void op_bra(vm_t *vm) {
 	vm->pc = symfind(&vm->symtab, vm->program.lines[vm->pc] + 12);
+}
+
+void op_bls(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) << popstack(&vm->stack));
+}
+
+void op_brs(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) >> popstack(&vm->stack));
 }
 
 void op_ceq(vm_t *vm) {
@@ -115,6 +128,14 @@ void op_mul(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) * popstack(&vm->stack));
 }
 
+void op_not(vm_t *vm) {
+	pushstack(&vm->stack, ~popstack(&vm->stack));
+}
+
+void op_oar(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) | popstack(&vm->stack));
+}
+
 void op_out(vm_t *vm) {
 	fprintf(stdout, "%d\n", popstack(&vm->stack));
 }
@@ -135,3 +156,6 @@ void op_sub(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) - popstack(&vm->stack));
 }
 
+void op_xor(vm_t *vm) {
+	pushstack(&vm->stack, popstack(&vm->stack) ^ popstack(&vm->stack));
+}

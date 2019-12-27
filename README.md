@@ -107,6 +107,17 @@ the result onto the stack. Values can be moved between the stack and main memory
 | `INC` |                      | Pops the top number off of the stack, adds 1, and pushes the result onto the stack.               |
 | `DEC` |                      | Pops the top number off of the stack, subtracts 1, and pushes the result onto the stack.          |
 
+### Bitwise
+
+| code  | operand  | description                                                                                                     |
+| ----- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `AND` |          | Pops the top two numbers off of the stack, performs a bitwise AND, and pushes the result onto the stack.        |
+| `BLS` |          | Pops the top two numbers off of the stack, performs a binary left shift, and pushes the result onto the stack.  |
+| `BRS` |          | Pops the top two numbers off of the stack, performs a binary right shift, and pushes the result onto the stack. |
+| `NOT` |          | Pops the top two numbers off of the stack, performs a bitwise NOT, and pushes the result onto the stack.        |
+| `OAR` |          | Pops the top two numbers off of the stack, performs a bitwise OR, and pushes the result onto the stack.         |
+| `XOR` |          | Pops the top two numbers off of the stack, performs a bitwise XOR, and pushes the result onto the stack.        |
+
 ### Flow Control
 
 | code  | operand  | description                                                                                 |

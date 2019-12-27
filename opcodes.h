@@ -26,9 +26,12 @@ SOFTWARE.
 #include "types.h"
 
 void op_add(vm_t *vm);
+void op_and(vm_t *vm);
 void op_bez(vm_t *vm);
 void op_bnz(vm_t *vm);
 void op_bra(vm_t *vm);
+void op_bls(vm_t *vm);
+void op_brs(vm_t *vm);
 void op_ceq(vm_t *vm);
 void op_cge(vm_t *vm);
 void op_cgt(vm_t *vm);
@@ -45,11 +48,14 @@ void op_lda(vm_t *vm);
 void op_ldi(vm_t *vm);
 void op_mod(vm_t *vm);
 void op_mul(vm_t *vm);
+void op_not(vm_t *vm);
+void op_oar(vm_t *vm);
 void op_out(vm_t *vm);
 void op_prn(vm_t *vm);
 void op_rtn(vm_t *vm);
 void op_sta(vm_t *vm);
 void op_sub(vm_t *vm);
+void op_xor(vm_t *vm);
 
 #endif
 
