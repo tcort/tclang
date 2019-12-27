@@ -43,6 +43,7 @@ void op_div(vm_t *vm);
 void op_dup(vm_t *vm);
 void op_hlt(vm_t *vm);
 void op_inc(vm_t *vm);
+void op_ini(vm_t *vm);
 void op_jal(vm_t *vm);
 void op_lda(vm_t *vm);
 void op_ldi(vm_t *vm);

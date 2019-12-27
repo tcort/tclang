@@ -33,7 +33,7 @@ SOFTWARE.
 #include "types.h"
 #include "util.h"
 
-#define NOPS (31)
+#define NOPS (32)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
 	{ { 'A', 'N', 'D', '\0' }, { 0, 0, 0, 0 }, op_and },
@@ -53,6 +53,7 @@ static op_t opcodes[NOPS] = {
 	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, op_dup },
 	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_hlt },
 	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, op_inc },
+	{ { 'I', 'N', 'I', '\0' }, { 0, 0, 0, 0 }, op_ini },
 	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, op_jal },
 	{ { 'L', 'D', 'A', '\0' }, { 0, 0, 0, 0 }, op_lda },
 	{ { 'L', 'D', 'I', '\0' }, { 0, 0, 0, 0 }, op_ldi },

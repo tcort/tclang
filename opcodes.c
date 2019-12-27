@@ -22,6 +22,7 @@ SOFTWARE.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "call.h"
 #include "opcodes.h"
@@ -105,6 +106,14 @@ void op_hlt(vm_t *vm) {
 
 void op_inc(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) + 1);
+}
+
+void op_ini(vm_t *vm) {
+	char line[96], *s;
+	memset(line, '\0', 96);
+	if ((s = fgets(line, 96, stdin)) != NULL) {
+		pushstack(&vm->stack, atoi(line));
+	}
 }
 
 void op_jal(vm_t *vm) {

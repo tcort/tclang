@@ -160,10 +160,11 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 ### Input / Output
 
-| code  | operand | description                                                 |
-| ----- | ------- | ----------------------------------------------------------- |
-| `OTS` | string  | Prints the string to standard output.                       |
-| `OTI` |         | Pops the top of the stack and prints it to standard output. |
+| code  | operand | description                                                                                        |
+| ----- | ------- | -------------------------------------------------------------------------------------------------- |
+| `INI` |         | Reads an line from standard input, converts text digits to a number, and pushes it onto the stack. |
+| `OTS` | string  | Prints the string to standard output.                                                              |
+| `OTI` |         | Pops the top of the stack and prints it to standard output.                                        |
 
 ### Misc
 
