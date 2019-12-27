@@ -27,6 +27,8 @@ LOOP
         LDA 42
         JAL SQR
         OTI
+        LDI 10
+        OCH
         LDA 42
         INC
         STA 42
@@ -162,9 +164,11 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 | code  | operand | description                                                                                        |
 | ----- | ------- | -------------------------------------------------------------------------------------------------- |
+| `ICH` |         | Reads a character from standard input and pushes the value onto the stack.                         |
 | `INI` |         | Reads an line from standard input, converts text digits to a number, and pushes it onto the stack. |
+| `OCH` |         | Pops the top of the stack and prints it as a character to standard output.                         |
+| `OTI` |         | Pops the top of the stack and prints it as an integer to standard output.                          |
 | `OTS` | string  | Prints the string to standard output.                                                              |
-| `OTI` |         | Pops the top of the stack and prints it to standard output.                                        |
 
 ### Misc
 

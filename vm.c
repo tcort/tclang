@@ -33,7 +33,7 @@ SOFTWARE.
 #include "types.h"
 #include "util.h"
 
-#define NOPS (32)
+#define NOPS (34)
 static op_t opcodes[NOPS] = {
 	{ { 'A', 'D', 'D', '\0' }, { 0, 0, 0, 0 }, op_add },
 	{ { 'A', 'N', 'D', '\0' }, { 0, 0, 0, 0 }, op_and },
@@ -52,6 +52,7 @@ static op_t opcodes[NOPS] = {
 	{ { 'D', 'E', 'C', '\0' }, { 0, 0, 0, 0 }, op_dec },
 	{ { 'D', 'U', 'P', '\0' }, { 0, 0, 0, 0 }, op_dup },
 	{ { 'H', 'L', 'T', '\0' }, { 0, 0, 0, 0 }, op_hlt },
+	{ { 'I', 'C', 'H', '\0' }, { 0, 0, 0, 0 }, op_ich },
 	{ { 'I', 'N', 'C', '\0' }, { 0, 0, 0, 0 }, op_inc },
 	{ { 'I', 'N', 'I', '\0' }, { 0, 0, 0, 0 }, op_ini },
 	{ { 'J', 'A', 'L', '\0' }, { 0, 0, 0, 0 }, op_jal },
@@ -61,6 +62,7 @@ static op_t opcodes[NOPS] = {
 	{ { 'M', 'U', 'L', '\0' }, { 0, 0, 0, 0 }, op_mul },
 	{ { 'N', 'O', 'T', '\0' }, { 0, 0, 0, 0 }, op_not },
 	{ { 'O', 'A', 'R', '\0' }, { 0, 0, 0, 0 }, op_oar },
+	{ { 'O', 'C', 'H', '\0' }, { 0, 0, 0, 0 }, op_och },
 	{ { 'O', 'T', 'I', '\0' }, { 0, 0, 0, 0 }, op_oti },
 	{ { 'O', 'T', 'S', '\0' }, { 0, 0, 0, 0 }, op_ots },
 	{ { 'R', 'T', 'N', '\0' }, { 0, 0, 0, 0 }, op_rtn },
@@ -102,7 +104,7 @@ void run(vm_t *vm) {
 		begin = 0;
 	}
 
-	for (vm->pc = begin; vm->pc < vm->program.sp && !vm->done; vm->pc++) {
+	for (vm->pc = begin; vm->pc < vm->program.sp && !vm->done && !feof(stdin) && !ferror(stdin); vm->pc++) {
 		size_t i;
 		if (vm->program.lines[vm->pc][0] != ' ') {
 			continue; /* label or comment */

@@ -104,6 +104,10 @@ void op_hlt(vm_t *vm) {
 	vm->done = 1;
 }
 
+void op_ich(vm_t *vm) {
+	pushstack(&vm->stack, getc(stdin));
+}
+
 void op_inc(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) + 1);
 }
@@ -145,8 +149,12 @@ void op_oar(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) | popstack(&vm->stack));
 }
 
+void op_och(vm_t *vm) {
+	fprintf(stdout, "%c", popstack(&vm->stack));
+}
+
 void op_oti(vm_t *vm) {
-	fprintf(stdout, "%d\n", popstack(&vm->stack));
+	fprintf(stdout, "%d", popstack(&vm->stack));
 }
 
 void op_ots(vm_t *vm) {
