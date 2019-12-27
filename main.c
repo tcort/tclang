@@ -29,21 +29,22 @@ static vm_t vm;
 
 int main(int argc, char *argv[]) {
 
-	FILE *in = stdin;
-	if (argc == 2) {
-		in = fopen(argv[1], "r");
-		if (in == NULL) {
-			perror(argv[0]);
-			exit(EXIT_FAILURE);
-		}
+	FILE *in;
+
+	if (argc != 2) {
+		fprintf(stderr, "usage: %s FILE\n", argv[0]);
+	}
+
+	in = fopen(argv[1], "r");
+	if (in == NULL) {
+		perror(argv[0]);
+		exit(EXIT_FAILURE);
 	}
 
 	load(&vm, in);
 	run(&vm);
 
-	if (argc == 2) {
-		fclose(in);
-	}
+	fclose(in);
 
 	exit(EXIT_SUCCESS);
 }
