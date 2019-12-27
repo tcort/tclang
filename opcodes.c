@@ -136,11 +136,11 @@ void op_oar(vm_t *vm) {
 	pushstack(&vm->stack, popstack(&vm->stack) | popstack(&vm->stack));
 }
 
-void op_out(vm_t *vm) {
+void op_oti(vm_t *vm) {
 	fprintf(stdout, "%d\n", popstack(&vm->stack));
 }
 
-void op_prn(vm_t *vm) {
+void op_ots(vm_t *vm) {
 	fprintf(stdout, "%s\n", vm->program.lines[vm->pc] + 12);
 }
 

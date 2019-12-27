@@ -14,7 +14,7 @@ This little demo prints the squares of number from 1 to 10. It shows off the sta
 
 ```
 MAIN
-        PRN Squares of integers from 1..10
+        OTS Squares of integers from 1..10
         LDI 1
         STA 42
         LDI 10
@@ -26,7 +26,7 @@ LOOP
         BEZ DONE
         LDA 42
         JAL SQR
-        OUT
+        OTI
         LDA 42
         INC
         STA 42
@@ -162,8 +162,8 @@ the result onto the stack. Values can be moved between the stack and main memory
 
 | code  | operand | description                                                 |
 | ----- | ------- | ----------------------------------------------------------- |
-| `PRN` | string  | Prints the string to standard output.                       |
-| `OUT` |         | Pops the top of the stack and prints it to standard output. |
+| `OTS` | string  | Prints the string to standard output.                       |
+| `OTI` |         | Pops the top of the stack and prints it to standard output. |
 
 ### Misc
 
