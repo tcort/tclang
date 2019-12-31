@@ -1,0 +1,26 @@
+MAIN
+        OTS Squares of integers from 1..10
+        LDI 1
+        STA 42
+        LDI 10
+        STA 88
+LOOP
+        LDA 88
+        LDA 42
+        CLE
+        BEZ DONE
+        LDA 42
+        JAL SQR
+        OTI
+        LDI 10
+        OCH
+        LDA 42
+        INC
+        STA 42
+        BRA LOOP
+DONE
+        HLT
+SQR
+        DUP
+        MUL
+        RTN
