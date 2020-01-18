@@ -2,10 +2,6 @@
 
 This file contains some notes about things to consider for future development.
 
-## Tracing
-
-would be nice if we could trace execution
-
 ## Testing
 
 a test suite would be nice
